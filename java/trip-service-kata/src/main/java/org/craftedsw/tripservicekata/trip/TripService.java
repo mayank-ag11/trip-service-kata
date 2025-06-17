@@ -1,6 +1,6 @@
 package org.craftedsw.tripservicekata.trip;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.craftedsw.tripservicekata.exception.UserNotLoggedInException;
@@ -20,7 +20,7 @@ public class TripService {
 			return tripsBy(user);
 		}
 
-		return new ArrayList<>();
+		return Collections.emptyList();
 	}
 
 	protected List<Trip> tripsBy(User user) {
