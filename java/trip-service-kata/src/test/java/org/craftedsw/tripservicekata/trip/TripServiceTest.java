@@ -17,7 +17,7 @@ public class TripServiceTest {
     void shouldThrowAnException_whenUserIsNotLoggedIn() {
         TripService tripServiceWithNullUser = new TripService() {
             @Override
-            protected User loggedUser() {
+            protected User loggedInUser() {
                 return null;
             }
         };
@@ -33,7 +33,7 @@ public class TripServiceTest {
 
         TripService tripService = new TripService() {
             @Override
-            protected User loggedUser() {
+            protected User loggedInUser() {
                 return loggedUser;
             }
         };
@@ -54,7 +54,7 @@ public class TripServiceTest {
 
         TripService tripService = new TripService() {
             @Override
-            protected User loggedUser() {
+            protected User loggedInUser() {
                 return loggedUser;
             }
 
