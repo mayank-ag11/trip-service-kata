@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.craftedsw.tripservicekata.trip.UserBuilder.newUser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -37,9 +38,10 @@ public class TripServiceTest {
             }
         };
 
-        User anotherUser = new User();
-        anotherUser.addFriend(new User());
-        anotherUser.addTrip(new Trip());
+        User anotherUser = newUser()
+            .friendsWith(new User())
+            .withTrips(new Trip())
+            .build();
 
         List<Trip> trips = tripService.getTripsByUser(anotherUser);
 
@@ -62,13 +64,14 @@ public class TripServiceTest {
             }
         };
 
-        User anotherUser = new User();
-        anotherUser.addFriend(loggedUser);
-        anotherUser.addTrip(new Trip());
-        anotherUser.addTrip(new Trip());
+        User anotherUser = newUser()
+            .friendsWith(loggedUser)
+            .withTrips(new Trip(), new Trip())
+            .build();
 
         List<Trip> trips = tripService.getTripsByUser(anotherUser);
 
         assertEquals(2, trips.size());
     }
+
 }
