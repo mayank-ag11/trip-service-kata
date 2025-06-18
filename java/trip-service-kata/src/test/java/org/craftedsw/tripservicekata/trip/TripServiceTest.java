@@ -2,6 +2,7 @@ package org.craftedsw.tripservicekata.trip;
 
 import org.craftedsw.tripservicekata.exception.UserNotLoggedInException;
 import org.craftedsw.tripservicekata.user.User;
+import org.craftedsw.tripservicekata.user.UserSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,36 +18,31 @@ import static org.mockito.Mockito.when;
 public class TripServiceTest {
 
     private TripDAO tripDAO;
+    private UserSession userSession;
+    private TripService tripService;
 
     @BeforeEach
     void setUp() {
         tripDAO = mock(TripDAO.class);
+        userSession = mock(UserSession.class);
+
+        tripService = new TripService(tripDAO, userSession);
     }
 
     @Test()
     void shouldThrowAnException_whenUserIsNotLoggedIn() {
-        TripService tripServiceWithNullUser = new TripService(tripDAO) {
-            @Override
-            protected User loggedInUser() {
-                return null;
-            }
-        };
+        when(userSession.loggedInUser()).thenReturn(null);
 
         assertThrows(UserNotLoggedInException.class, () -> {
-            tripServiceWithNullUser.getTripsByUser(null);
+            tripService.getTripsByUser(null);
         });
     }
 
     @Test
     void shouldReturnNoTrips_whenUsersAreNotFriends() {
-        User loggedUser = new User();
+        User loggedInUser = new User();
 
-        TripService tripService = new TripService(tripDAO) {
-            @Override
-            protected User loggedInUser() {
-                return loggedUser;
-            }
-        };
+        when(userSession.loggedInUser()).thenReturn(loggedInUser);
 
         User anotherUser = newUser()
             .friendsWith(new User())
@@ -60,21 +56,14 @@ public class TripServiceTest {
 
     @Test
     void shouldReturnTrips_whenUsersAreFriends() {
-        User loggedUser = new User();
-
-        TripService tripService = new TripService(tripDAO) {
-            @Override
-            protected User loggedInUser() {
-                return loggedUser;
-            }
-
-        };
+        User loggedInUser = new User();
 
         User anotherUser = newUser()
-            .friendsWith(loggedUser)
+            .friendsWith(loggedInUser)
             .withTrips(new Trip(), new Trip())
             .build();
 
+        when(userSession.loggedInUser()).thenReturn(loggedInUser);
         when(tripDAO.tripsBy(anotherUser)).thenReturn(anotherUser.trips());
 
         List<Trip> trips = tripService.getTripsByUser(anotherUser);

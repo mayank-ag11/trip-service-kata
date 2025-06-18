@@ -6,13 +6,17 @@ import java.util.List;
 import org.craftedsw.tripservicekata.exception.UserNotLoggedInException;
 import org.craftedsw.tripservicekata.user.User;
 import org.craftedsw.tripservicekata.user.UserSession;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class TripService {
 
 	private final TripDAO tripDAO;
+	private final UserSession userSession;
 
-	public TripService(TripDAO tripDAO) {
+	@Autowired
+	public TripService(TripDAO tripDAO, UserSession userSession) {
 		this.tripDAO = tripDAO;
+		this.userSession = userSession;
 	}
 
 	public List<Trip> getTripsByUser(User user) throws UserNotLoggedInException {
@@ -21,6 +25,11 @@ public class TripService {
 			throw new UserNotLoggedInException();
 		}
 
+//		// doubt, which is more readable?
+//		return user.isFriendOf(loggedInUser())
+//			? tripDAO.tripsBy(user)
+//			: Collections.emptyList();
+
 		if(user.isFriendOf(loggedInUser())) {
 			return tripDAO.tripsBy(user);
 		}
@@ -28,8 +37,8 @@ public class TripService {
 		return Collections.emptyList();
 	}
 
-	protected User loggedInUser() {
-		return UserSession.getInstance().getLoggedUser();
+	private User loggedInUser() {
+		return userSession.loggedInUser();
 	}
 
 }
