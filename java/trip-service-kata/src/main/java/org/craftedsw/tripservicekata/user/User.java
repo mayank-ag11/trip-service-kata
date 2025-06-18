@@ -7,8 +7,8 @@ import org.craftedsw.tripservicekata.trip.Trip;
 
 public class User {
 
-	private List<Trip> trips = new ArrayList<Trip>();
-	private List<User> friends = new ArrayList<User>();
+	private final List<Trip> trips = new ArrayList<Trip>();
+	private final List<User> friends = new ArrayList<User>();
 
 	public boolean isFriendOf(User user) {
 		return friends.contains(user);

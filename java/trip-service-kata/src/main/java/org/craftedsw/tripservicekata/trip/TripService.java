@@ -25,11 +25,7 @@ public class TripService {
 			throw new UserNotLoggedInException();
 		}
 
-//		// doubt, which is more readable?
-//		return user.isFriendOf(loggedInUser())
-//			? tripDAO.tripsBy(user)
-//			: Collections.emptyList();
-
+		// doubt, which is more readable, this or ternary?
 		if(user.isFriendOf(loggedInUser())) {
 			return tripDAO.tripsBy(user);
 		}
