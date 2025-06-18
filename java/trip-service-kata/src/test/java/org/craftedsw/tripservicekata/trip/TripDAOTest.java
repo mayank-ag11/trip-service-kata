@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TripDAOTest {
     @Test
-    void shouldThrowException_whenFindingUserTrips() {
+    void shouldThrowException_whileFindingUserTrips() {
         assertThrows(CollaboratorCallException.class, () -> {
            new TripDAO().tripsBy(new User());
         });
