@@ -13,6 +13,11 @@ public class TripService {
 	private final TripDAO tripDAO;
 	private final UserSession userSession;
 
+	public TripService() {
+		this.tripDAO = new TripDAO();
+		this.userSession = UserSession.getInstance();
+	}
+
 	@Autowired
 	public TripService(TripDAO tripDAO, UserSession userSession) {
 		this.tripDAO = tripDAO;
