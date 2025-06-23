@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class UserSessionTest {
     @Test
-    void shouldThrowException_whileFindingLoggedInUser() {
+    void shouldFail_whileFindingLoggedInUser() {
         UserSession userSession = UserSession.getInstance();
 
         assertThrows(CollaboratorCallException.class, userSession::loggedInUser);

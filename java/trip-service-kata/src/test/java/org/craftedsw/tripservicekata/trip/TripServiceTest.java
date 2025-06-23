@@ -30,7 +30,7 @@ public class TripServiceTest {
     }
 
     @Test()
-    void shouldThrowAnException_whenUserIsNotLoggedIn() {
+    void shouldFail_whenUserIsNotLoggedIn() {
         when(userSession.loggedInUser()).thenReturn(null);
 
         assertThrows(UserNotLoggedInException.class, () -> {

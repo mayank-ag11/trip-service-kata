@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserTest {
     @Test
-    void shouldInform_whenUserIsAFriend() {
+    void shouldBeAFriend() {
         User user = new User();
         User anotherUser = new User();
         user.addFriend(anotherUser);
@@ -16,7 +16,7 @@ public class UserTest {
     }
 
     @Test
-    void shouldInform_whenUserIsNotAFriend() {
+    void shouldNotBeAFriend() {
         User user = new User();
         User anotherUser = new User();
 
