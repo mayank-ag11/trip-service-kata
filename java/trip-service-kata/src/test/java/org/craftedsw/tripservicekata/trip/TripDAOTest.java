@@ -6,11 +6,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TripDAOTest {
+class TripDAOTest {
     @Test
     void shouldFail_whileFindingUserTrips() {
+        User user = new User();
+        TripDAO tripDAO = new TripDAO();
         assertThrows(CollaboratorCallException.class, () -> {
-           new TripDAO().tripsBy(new User());
+           tripDAO.tripsBy(user);
         });
     }
 }
